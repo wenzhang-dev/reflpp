@@ -12,16 +12,10 @@ While everything looks nice, it's limited to the aggregate type.
 # Example
 
 ```c++
-#include <field_name.h>
-#include <fields_count.h>
 #include <fmt/core.h>
 #include <fmt/ranges.h>
 #include <fmt/std.h>
-#include <for_each.h>
-#include <json/json_reader.h>
-#include <json/json_writer.h>
-#include <json/pretty_formatter.h>
-#include <utils.h>
+#include <reflpp.h>
 
 #include <array>
 #include <iostream>
@@ -139,4 +133,37 @@ int main() {
 
     return 0;
 }
+```
+
+The output from the example program is as follows:
+
+```txt
+The number of fields for Foo: 10
+The number of fields for Bar: 3
+The field names of Foo: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+The field names of Bar: ["foo", "f64", "str"]
+Iterate Foo struct:
+The field idx: 0, value: 1
+The field idx: 1, value: false
+The field idx: 2, value: 3.14
+The field idx: 3, value: 456
+The field idx: 4, value: ["789", "123", "456"]
+The field idx: 5, value: [7, 8, 9]
+The field idx: 6, value: {"1": "2", "3": "4"}
+The field idx: 7, value: {7, 8, 9}
+The field idx: 8, value: optional(1)
+The field idx: 9, value: 234
+Json serialization:
+{"foo":{"a":1,"b":false,"c":3.14,"d":"456","e":["789","123","456"],"f":[7,8,9],"g":{"1":"2","3":"4"},"h":[7,8,9],"i":1,"j":"234"},"f64":1.23,"str":"789"}
+Json deserialization:
+The field idx: 0, value: 1
+The field idx: 1, value: false
+The field idx: 2, value: 3.14
+The field idx: 3, value: 456
+The field idx: 4, value: ["789", "123", "456"]
+The field idx: 5, value: [7, 8, 9]
+The field idx: 6, value: {"1": "2", "3": "4"}
+The field idx: 7, value: {7, 8, 9}
+The field idx: 8, value: optional(1)
+The field idx: 9, value: 234
 ```
