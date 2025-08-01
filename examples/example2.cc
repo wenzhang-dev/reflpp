@@ -1,17 +1,3 @@
-# reflpp
-
-reflpp is a lightweight, non-intrusive reflection library. It is implemented based on cxx20. The library makes it easy to iterate over the members of a struct, get the number of members, get the name of the member, and json serialization and deserialization. The most important feature is that it is non-intrusive. There is no need to use macros or registers to declare which fields the struct has, the address offset of each field.
-
-While everything looks nice, it's limited to the aggregate type.
-
-# Dependency
-
-- cxx20
-- fmtlib
-
-# Example
-
-```c++
 #include <field_name.h>
 #include <fields_count.h>
 #include <fmt/core.h>
@@ -139,4 +125,3 @@ int main() {
 
     return 0;
 }
-```
