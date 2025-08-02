@@ -1,11 +1,13 @@
 #include <field_name.h>
 #include <fields_count.h>
+#include <value.h>
 #include <fmt/core.h>
 #include <fmt/ranges.h>
 #include <fmt/std.h>
 #include <for_each.h>
 #include <json/json_reader.h>
 #include <json/json_writer.h>
+#include <json/json_value.h>
 #include <json/pretty_formatter.h>
 
 #include <array>
@@ -219,6 +221,41 @@ int main() {
     std::cout << bar1.a << std::endl;
     std::cout << bar1.b << std::endl;
     std::cout << bar1.c << std::endl;
+
+    // json value
+    std::cout << "Json value" << std::endl;
+
+    ::reflpp::Value v;
+    auto& dict = v.AsDirectory().Insert("123", 3.14).Insert("456", false).Insert("789", 111);
+
+    for (auto& kv : dict) {
+        std::cout << "key: " << kv.first << std::endl;
+    }
+
+    ::reflpp::json::PrettyJsonFormatter stream3;
+    ::reflpp::json::ToJson(stream3, v);
+
+    std::cout << stream3 << std::endl;
+
+    json_str = R"""(
+{
+    "123": 3.14,
+    "456": false,
+    "789": 111
+}
+    )""";
+
+    ::reflpp::Value v1;
+    ec = ::reflpp::json::FromJson(json_str, v1, &detail_emsg);
+    std::cout << "err: " << detail_emsg << std::endl;
+
+    auto& dict1 = *v1.ToDirectory();
+    for (auto& kv : dict1) {
+        std::cout << "key: " << kv.first << std::endl;
+    }
+    std::cout << "val: " << dict1["123"].As<::reflpp::Value::Float>() << std::endl;
+    std::cout << "val: " << dict1["456"].As<::reflpp::Value::Boolean>() << std::endl;
+    std::cout << "val: " << dict1["789"].As<::reflpp::Value::Int>() << std::endl;
 
     return 0;
 }
