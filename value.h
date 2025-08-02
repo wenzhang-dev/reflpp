@@ -117,13 +117,9 @@ class Directory {
 
    public:
     inline Value& operator[](std::string_view key);
-    inline Value& operator[](const std::string& key) {
+    Value& operator[](const char* key) {
         return operator[](std::string_view(key));
     }
-    inline Value& operator[](const char* key) {
-        return operator[](std::string_view(key));
-    }
-
     operator bool() const { return !map_.empty(); }
 
    public:
@@ -267,6 +263,7 @@ class Value {
     Value(const char* v) : storage_(std::string(v)) {}
     Value(std::string_view v) : storage_(std::string(v.begin(), v.end())) {}
     Value(std::string&& v) : storage_(std::move(v)) {}
+    Value(const std::string& v) : storage_(v) {}
 
     Value(List&& v) : storage_(std::move(v)) {}
     Value(const List& v) : storage_(v) {}
